@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mekanım Neresi</title>
+    <style>
+        body {
+            background-color: #f4e1ec; /* Pembe-mor tonu arka plan */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            animation: backgroundAnimation 15s ease infinite;
+            background-size: 400% 400%;
+            background-image: linear-gradient(-45deg, #f4e1ec, #d6a1bf, #b77daa, #af669e);
+            position: relative; /* Pozisyonu belirleme */
+        }
+        h1 {
+            color: #ffffff; /* Beyaz yazı rengi */
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff5c8a; /* Pembe-kırmızı tonunda buton arka planı */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #ff2e63; /* Koyu pembe-kırmızı hover rengi */
+        }
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Tıklama olaylarını pas geç */
+        }
+        .heart {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: white; /* Beyaz kalp rengi */
+            border-radius: 50%;
+            animation: heartAnimation 5s linear infinite;
+        }
+        .heart:nth-child(1) {
+            top: 10%;
+            left: 20%;
+        }
+        .heart:nth-child(2) {
+            top: 20%;
+            left: 70%;
+            animation-delay: 1s;
+        }
+        .heart:nth-child(3) {
+            top: 50%;
+            left: 40%;
+            animation-delay: 2s;
+        }
+        .heart:nth-child(4) {
+            top: 70%;
+            left: 80%;
+            animation-delay: 3s;
+        }
+        .heart:nth-child(5) {
+            top: 90%;
+            left: 10%;
+            animation-delay: 4s;
+        }
+        @keyframes heartAnimation {
+            0% {
+                transform: translateY(0) rotate(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        @keyframes backgroundAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        @media (max-width: 600px) {
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+</head>
+<body>
+    <h1>Görüntülemek istediğiniz mekanı seçin.</h1>
+    <div class="button-container">
+        <a href="{{ url_for('category_page', category='yemek_readonly') }}" class="btn">Yemek</a>
+        <a href="{{ url_for('category_page', category='tatli_readonly') }}" class="btn">Tatlı-Kahve</a>
+        <a href="{{ url_for('category_page', category='pub_readonly') }}" class="btn">Pub</a>
+        <a href="{{ url_for('category_page', category='diger_readonly') }}" class="btn">Diğer</a>
+        <a href="{{ url_for('category_page', category='main') }}" class="btn">Başlangıça Dön</a>
+    </div>
+    <!-- Kalpler için container -->
+    <div class="hearts">
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+    </div>
+</body>
+</html>

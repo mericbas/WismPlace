@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diğer Mekanlar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4e1ec; /* Toz pembe-mor tonu arka plan */
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-x: auto; /* Yatay taşmalar için kaydırma */
+            animation: fadeInAnimation 1s ease-in-out; /* Animasyon efekti */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #ff5c8a; /* Pembe-kırmızı tonunda başlık arka planı */
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        td {
+            background-color: #f8f9fa;
+            color: #343a40;
+            font-size: 14px;
+        }
+        .back-button {
+            display: inline-block;
+            background-color: #ff5c8a; /* Pembe-kırmızı tonunda geri butonu arka planı */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        .back-button:hover {
+            background-color: #ff2e63; /* Koyu pembe-kırmızı hover rengi */
+        }
+        
+        /* Mobil uyumluluk için ek stil */
+        @media only screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            table {
+                font-size: 12px;
+            }
+            th, td {
+                padding: 8px;
+            }
+            .back-button {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+        
+        /* Animasyon için keyframes tanımı */
+        @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Arka plan renkleri için ek stil */
+        .highlight-nan {
+            background-color: #e2f725 !important; /* Açık pembe */
+        }
+        .highlight-green {
+            background-color: #d4edda !important; /* Açık yeşil */
+        }
+        .highlight-pink {
+            background-color: #f8d7da !important; /* Açık pembe */
+        }
+        .highlight-red {
+            background-color: #fcaab3 !important; /* Açık kırmızı */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; color: #ff5c8a;">Diğer Mekanlar</h1>
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Adı</th>
+                    <th>Puan</th>
+                    <th>Açıklama</th>
+                    <th>Yer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row['ID'] }}</td>
+                    <td>{{ row['Adı'] }}</td>
+                    <td class="
+                    {% if row['Puan'] == 'nan' %}highlight-nan
+                    {% elif row['Puan']|int >= 8 and row['Puan']|int <= 10 %}highlight-green
+                    {% elif row['Puan']|int >= 4 and row['Puan']|int < 8 %}highlight-pink
+                    {% elif row['Puan']|int < 4 %}highlight-red
+                    {% endif %}
+                    ">{{ row['Puan'] }}</td>
+                    <td>{{ row['Açıklama'] }}</td>
+                    <td>{{ row['Yer'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('category_page', category='backO') }}" class="back-button">Geri Çık</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let table = document.getElementById("data-table");
+            let rows = Array.from(table.rows).slice(1); // Tablodaki tüm satırları al, başlık hariç
+            rows.sort((a, b) => {
+                let aText = a.cells[2].innerText.toLowerCase();
+                let bText = b.cells[2].innerText.toLowerCase();
+                if (aText === 'nan') return -1; // 'nan' en üstte olacak
+                if (bText === 'nan') return 1;
+                return 0;
+            });
+            rows.forEach(row => table.tBodies[0].appendChild(row)); // Sıralanmış satırları tabloya yeniden ekle
+        });
+    </script>
+</body>
+</html>
