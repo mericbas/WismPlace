@@ -7,13 +7,6 @@
     <link rel="icon" type="image/png" href="https://cdn.icon-icons.com/icons2/1151/PNG/512/1486505266-dish-food-dome-dish-kitchen-restaurant_81412.png">
     <link rel="manifest" href="/static/manifest.json">
 
-        <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/static/service-worker.js');
-        }
-        </script>
-
-
     <style>
         body {
             background-color: #f4e1ec; /* Pembe-mor tonu arka plan */
@@ -107,6 +100,14 @@
                 opacity: 0;
             }
         }
+        .copyright {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
     </style>
     <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
 </head>
@@ -125,6 +126,10 @@
         <div class="heart"></div>
         <div class="heart"></div>
         <div class="heart"></div>
+    </div>
+
+    <div class="copyright">
+        &copy; 2024 Meriç Baş. Tüm hakları saklıdır.
     </div>
 </body>
 </html>

@@ -140,17 +140,18 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            let table = document.getElementById("data-table");
-            let rows = Array.from(table.rows).slice(1); // Tablodaki tüm satırları al, başlık hariç
-            rows.sort((a, b) => {
-                let aText = a.cells[2].innerText.toLowerCase();
-                let bText = b.cells[2].innerText.toLowerCase();
-                if (aText === 'nan') return -1; // 'nan' en üstte olacak
-                if (bText === 'nan') return 1;
-                return 0;
-            });
-            rows.forEach(row => table.tBodies[0].appendChild(row)); // Sıralanmış satırları tabloya yeniden ekle
+          let table = document.getElementById("data-table");
+          let rows = Array.from(table.rows).slice(1); // Tablodaki tüm satırları al, başlık hariç
+          rows.sort((a, b) => {
+            let aText = a.cells[2].innerText.toLowerCase();
+            let bText = b.cells[2].innerText.toLowerCase();
+            if (aText === 'nan') return -1; // 'nan' en üstte olacak
+            if (bText === 'nan') return 1;
+            // Sort by numerical value in descending order
+            return parseFloat(bText) - parseFloat(aText);
+          });
+          rows.forEach(row => table.tBodies[0].appendChild(row)); // Sıralanmış satırları tabloya yeniden ekle
         });
-    </script>
+      </script>
 </body>
 </html>

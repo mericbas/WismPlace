@@ -102,6 +102,9 @@
         .highlight-red {
             background-color: #fcaab3 !important; /* Açık kırmızı */
         }
+        .highlight-nan {
+        background-color: yellow !important; /* Sarı */
+    }
     </style>
 </head>
 <body>
@@ -123,7 +126,7 @@
                     <td>{{ row['ID'] }}</td>
                     <td>{{ row['Adı'] }}</td>
                     <td class="
-                    {% if row['Puan'] == 'nan' %}highlight-nan
+                    {% if row['Puan'] == 'nan' %}highlight-green
                     {% elif row['Puan']|int >= 8 and row['Puan']|int <= 10 %}highlight-green
                     {% elif row['Puan']|int >= 4 and row['Puan']|int < 8 %}highlight-pink
                     {% elif row['Puan']|int < 4 %}highlight-red
@@ -132,25 +135,26 @@
                     <td>{{ row['Açıklama'] }}</td>
                     <td>{{ row['Yer'] }}</td>
                 </tr>
-                {% endfor %}
+                {% endfor %}    
             </tbody>
         </table>
         <a href="{{ url_for('category_page', category='backO') }}" class="back-button">Geri Çık</a>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let table = document.getElementById("data-table");
-            let rows = Array.from(table.rows).slice(1); // Tablodaki tüm satırları al, başlık hariç
-            rows.sort((a, b) => {
-                let aText = a.cells[2].innerText.toLowerCase();
-                let bText = b.cells[2].innerText.toLowerCase();
-                if (aText === 'nan') return -1; // 'nan' en üstte olacak
-                if (bText === 'nan') return 1;
-                return 0;
-            });
-            rows.forEach(row => table.tBodies[0].appendChild(row)); // Sıralanmış satırları tabloya yeniden ekle
-        });
-    </script>
+  document.addEventListener("DOMContentLoaded", function() {
+    let table = document.getElementById("data-table");
+    let rows = Array.from(table.rows).slice(1); // Tablodaki tüm satırları al, başlık hariç
+    rows.sort((a, b) => {
+      let aText = a.cells[2].innerText.toLowerCase();
+      let bText = b.cells[2].innerText.toLowerCase();
+      if (aText === 'nan') return -1; // 'nan' en üstte olacak
+      if (bText === 'nan') return 1;
+      // Sort by numerical value in descending order
+      return parseFloat(bText) - parseFloat(aText);
+    });
+    rows.forEach(row => table.tBodies[0].appendChild(row)); // Sıralanmış satırları tabloya yeniden ekle
+  });
+</script>
 </body>
 </html>
